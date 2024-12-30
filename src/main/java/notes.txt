@@ -1,0 +1,48 @@
+A Program to show how to implement custom query building using EntityManager, Query interfaces:
+Programs:
+* SpringBootDataJPAApplication8Application.java
+* Employee.java
+* EmployeeCustomRepository.java
+* EmployeeCustomRepositoryImpl.java
+* TestRunner.java
+Notes:
+* The @PersistenceContext to expresses a dependency on a container-managed EntityManager and its associated persistence context.
+* The @PersistenceContext annotation can be used at class level, method level and field level.
+* The EntityManager interface is used to interact with the persistence context.
+* An EntityManager instance is associated with a persistence context. A persistence context is a set of entity instances in which for any persistent entity identity there is a unique entity instance.
+* The Query interface is used to control query execution, and it provide many methods to controlling query execution. 
+Output:
+From run method in TestRunner class.
+----- To get all records by getAllEmployees() method -----
+Hibernate: select employee0_.employee_id as employee1_0_, employee0_.age as age2_0_, employee0_.designation as designat3_0_, employee0_.employee_code as employee4_0_, employee0_.employee_name as employee5_0_ from employee employee0_
+1 --> Sree Sagar[A001]
+2 --> Sathish[A002]
+3 --> Pavan[A003]
+4 --> Aravind[A004]
+5 --> Pavan[A005]
+6 --> Rakesh[A006]
+----- To get all records by getEmployeeByEmployeeId(Integer employeeId) method -----
+Hibernate: select employee0_.employee_id as employee1_0_, employee0_.age as age2_0_, employee0_.designation as designat3_0_, employee0_.employee_code as employee4_0_, employee0_.employee_name as employee5_0_ from employee employee0_ where employee0_.employee_id=?
+4 --> Aravind[A004]
+----- To get all records by getEmployeesByDesignation(String designation) method -----
+Hibernate: select employee0_.employee_id as employee1_0_, employee0_.age as age2_0_, employee0_.designation as designat3_0_, employee0_.employee_code as employee4_0_, employee0_.employee_name as employee5_0_ from employee employee0_ where employee0_.designation=?
+1 --> Sree Sagar[A001] --> Software Engineer
+2 --> Sathish[A002] --> Software Engineer
+6 --> Rakesh[A006] --> Software Engineer
+----- To get all records by getEmployeesByEmployeeIds(List<Integer> employeeIds) method -----
+Hibernate: select employee0_.employee_id as employee1_0_, employee0_.age as age2_0_, employee0_.designation as designat3_0_, employee0_.employee_code as employee4_0_, employee0_.employee_name as employee5_0_ from employee employee0_ where employee0_.employee_id in (? , ?)
+2 --> Sathish[A002] --> Software Engineer
+3 --> Pavan[A003] --> QA Engineer
+----- To get all records by getEmployeeNamesOrderBy(String orderBy) method -----
+Hibernate: select employee0_.employee_name as col_0_0_ from employee employee0_ order by employee0_.employee_name desc
+Sree Sagar
+Sathish
+Rakesh
+Pavan
+Pavan
+Aravind
+----- To get all records by getEmployees(Integer firstResult, Integer maxResult) method -----
+Hibernate: select employee0_.employee_id as employee1_0_, employee0_.age as age2_0_, employee0_.designation as designat3_0_, employee0_.employee_code as employee4_0_, employee0_.employee_name as employee5_0_ from employee employee0_ limit ?, ?
+2 --> Sathish[A002] --> Software Engineer
+3 --> Pavan[A003] --> QA Engineer
+From main method in SpringBootDataJPAApplication8Application class.
